@@ -1,0 +1,10 @@
+ 
+- https://unpkg.com/browse/@angular/core@15.1.5/package.json
+- https://stackoverflow.com/questions/62221633/spring-rest-post-multiple-files
+- https://www.bezkoder.com/spring-boot-upload-multiple-files/ 
+- https://www.linkedin.com/pulse/how-upload-multiple-images-spring-boot-udara-san/
+- https://github.com/bezkoder/node-express-mongodb
+- https://github.com/bezkoder/nodejs-express-sequelize-mysql 
+-  https://www.dailycodebuffer.com/category/spring-boot/
+- 
+-  

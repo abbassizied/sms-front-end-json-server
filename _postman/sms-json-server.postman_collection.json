@@ -1,0 +1,19 @@
+{
+	"info": {
+		"_postman_id": "2462b7a6-58fb-4371-b769-530f5a2fdc5a",
+		"name": "sms-json-server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "10958206"
+	},
+	"item": [
+		{
+			"name": "get all suppliers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/suppliers"
+			},
+			"response": []
+		}
+	]
+}

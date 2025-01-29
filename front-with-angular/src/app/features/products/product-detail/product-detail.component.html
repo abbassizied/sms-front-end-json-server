@@ -1,0 +1,23 @@
+<div *ngIf="product()">
+    <h2>{{ product()!.name }}</h2>
+    <img [src]="product()!.mainImage" alt="Product image">
+    
+    <p>{{ product()!.description }}</p>
+    
+    <div class="row">
+      <div class="col-md-4">
+        <h4>Details</h4>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <strong>Price:</strong> {{ product()!.price | currency }}
+          </li>
+          <li class="list-group-item">
+            <strong>Quantity:</strong> {{ product()!.quantity }}
+          </li>
+          <li class="list-group-item">
+            <strong>Supplier ID:</strong> {{ product()!.supplierId }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>

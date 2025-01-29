@@ -1,0 +1,116 @@
+https://stackoverflow.com/questions/78201939/angular-signals-how-to-handle-requests-to-api
+To represent the described UML design in MongoDB (or other NoSQL databases), the relationships can be modeled as **embedded documents** or **referenced documents**, depending on the use case. Below is how you can design these entities and relationships in MongoDB:
+
+---
+
+### **1. Supplier Collection**
+Each supplier has multiple products. You can represent this relationship using references.
+
+```json
+{
+  "_id": "supplier_id_1",
+  "name": "Supplier Name",
+  "contactInfo": {
+    "email": "supplier@example.com",
+    "phone": "123-456-7890"
+  },
+  "products": ["product_id_1", "product_id_2"]  // Array of product IDs
+}
+```
+
+---
+
+### **2. Product Collection**
+Each product belongs to a supplier. This is a one-to-many relationship represented with a reference to the supplier.
+
+```json
+{
+  "_id": "product_id_1",
+  "name": "Product Name",
+  "price": 100.0,
+  "supplier_id": "supplier_id_1"  // Reference to the supplier
+}
+```
+
+---
+
+### **3. Customer Collection**
+A customer can place multiple orders. This can be modeled by referencing orders.
+
+```json
+{
+  "_id": "customer_id_1",
+  "name": "Customer Name",
+  "email": "customer@example.com",
+  "orders": ["order_id_1", "order_id_2"]  // Array of order IDs
+}
+```
+
+---
+
+### **4. Order Collection**
+An order belongs to one customer and can have multiple `orderItems`. The order contains a reference to the customer and embeds the `orderItems`.
+
+```json
+{
+  "_id": "order_id_1",
+  "customer_id": "customer_id_1",  // Reference to the customer
+  "orderDate": "2025-01-28",
+  "totalAmount": 300.0,
+  "orderItems": [
+    {
+      "product_id": "product_id_1",  // Reference to the product
+      "quantity": 2
+    },
+    {
+      "product_id": "product_id_2",  // Reference to another product
+      "quantity": 1
+    }
+  ]
+}
+```
+
+---
+
+### **5. OrderItem Subdocument**
+Order items are generally embedded within the `Order` document to maintain a hierarchical relationship. However, if there are many order items or frequent updates, they can be stored in a separate collection.
+
+Embedded in `Order`:
+```json
+"orderItems": [
+  {
+    "product_id": "product_id_1",
+    "quantity": 2
+  },
+  {
+    "product_id": "product_id_2",
+    "quantity": 1
+  }
+]
+```
+
+If stored as a separate collection:
+```json
+{
+  "_id": "orderItem_id_1",
+  "order_id": "order_id_1",  // Reference to the order
+  "product_id": "product_id_1",  // Reference to the product
+  "quantity": 2
+}
+```
+
+---
+
+### **Summary of Relationships**
+| Entity       | Relationship                          | Implementation                         |
+|--------------|---------------------------------------|----------------------------------------|
+| Supplier → Product | One-to-Many | Products have `supplier_id` references. |
+| Customer → Order   | One-to-Many | Orders have `customer_id` references.  |
+| Order → OrderItem  | One-to-Many | Embed `orderItems` in Order.           |
+| OrderItem → Product | Many-to-One | `product_id` references in `orderItems`. |
+
+### **Trade-offs in MongoDB**
+- **Embedded documents** (e.g., `orderItems` in `Order`): Efficient for reads if the entire structure is accessed together. Use this if order items are not queried independently.
+- **Referenced documents** (e.g., `product_id` in `OrderItem`): Useful if entities need to be updated frequently or accessed separately.
+
+Would you like to expand on any specific part of this design?

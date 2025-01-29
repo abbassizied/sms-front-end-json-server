@@ -1,0 +1,54 @@
+<!-- Main Image Input -->
+<div>
+  <label for="mainImage">Main Image</label>
+  <input type="file" 
+         id="mainImage" 
+         accept="image/*" 
+         (change)="onMainImageChange($event)"
+         aria-describedby="mainImageHelp">
+  <small id="mainImageHelp" class="form-text text-muted">
+    Select the primary product image
+  </small>
+</div>
+
+<!-- Additional Images Input -->
+<div>
+  <label for="additionalImages">Additional Images</label>
+  <input type="file" 
+         id="additionalImages" 
+         accept="image/*" 
+         multiple 
+         (change)="onImagesChange($event)"
+         aria-describedby="additionalImagesHelp">
+  <small id="additionalImagesHelp" class="form-text text-muted">
+    Select additional product images (multiple selection allowed)
+  </small>
+</div>
+
+<!-- Price Input -->
+<div>
+  <label for="price">Price</label>
+  <input type="number" 
+         id="price" 
+         formControlName="price" 
+         step="0.01"
+         placeholder="Enter product price">
+</div>
+
+<!-- Quantity Input -->
+<div>
+  <label for="quantity">Quantity</label>
+  <input type="number" 
+         id="quantity" 
+         formControlName="quantity"
+         placeholder="Enter stock quantity">
+</div>
+
+<!-- Supplier ID Input -->
+<div>
+  <label for="supplierId">Supplier ID</label>
+  <input type="number" 
+         id="supplierId" 
+         formControlName="supplierId"
+         placeholder="Enter supplier ID">
+</div>

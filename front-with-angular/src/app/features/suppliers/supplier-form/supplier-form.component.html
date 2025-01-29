@@ -1,0 +1,52 @@
+<!-- supplier-form.component.html -->
+<h2>{{ isEditMode() ? 'Edit Supplier' : 'Create Supplier' }}</h2>
+
+<form [formGroup]="supplierForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name">Name</label>
+    <input type="text" id="name" formControlName="name">
+    @if (supplierForm.controls.name.invalid && supplierForm.controls.name.touched) {
+      <div role="alert">Name is required</div>
+    }
+  </div>
+
+  <div>
+    <label for="email">Email</label>
+    <input type="email" id="email" formControlName="email">
+    @if (supplierForm.controls.email.invalid && supplierForm.controls.email.touched) {
+      <div role="alert">Valid email is required</div>
+    }
+  </div>
+
+  <div>
+    <label for="phone">Phone</label>
+    <input type="tel" id="phone" formControlName="phone">
+    @if (supplierForm.controls.phone.invalid && supplierForm.controls.phone.touched) {
+      <div role="alert">Phone is required</div>
+    }
+  </div>
+
+  <div>
+    <label for="address">Address</label>
+    <textarea id="address" formControlName="address"></textarea>
+  </div>
+
+  @if (isEditMode() && existingLogoUrl()) {
+    <div>
+      <label>Current Logo</label>
+      <img [src]="'http://localhost:8080' + existingLogoUrl()" alt="Supplier logo" width="100">
+    </div>
+  }
+
+  <div>
+    <label for="logo">Logo</label>
+    <input type="file" id="logo" accept="image/*" (change)="onFileChange($event)">
+  </div>
+
+  <div>
+    <button type="submit" [disabled]="supplierForm.invalid">
+      {{ isEditMode() ? 'Update' : 'Create' }}
+    </button>
+    <a routerLink="/suppliers">Cancel</a>
+  </div>
+</form>

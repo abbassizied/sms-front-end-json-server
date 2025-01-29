@@ -1,0 +1,67 @@
+{
+  "suppliers": [
+    {
+      "id": 1,
+      "name": "Zied Abbassi",
+      "email": "abbassizied@outlook.fr",
+      "phone": "23249952",
+      "address": "Box Office n°83 - Post office of chorfa - 2243\r\nCITE AFH-1 near CNAM and Post Office of Chorfa",
+      "logoUrl": "/uploads/1738190017146-toyota-logo.png",
+      "dateCreated": "2025-01-29T21:48:08.165Z",
+      "lastUpdated": "2025-01-29T22:33:37.148Z"
+    },
+    {
+      "id": 2,
+      "name": "bbbbbbbbbbb",
+      "email": "bbbbbbbbbbb@outlook.fr",
+      "phone": "23249952",
+      "address": "Bbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "logoUrl": "/uploads/1738190024890-apple-logo.png",
+      "dateCreated": "2025-01-29T21:48:14.952Z",
+      "lastUpdated": "2025-01-29T22:33:44.892Z"
+    },
+    {
+      "id": 3,
+      "name": "Zied Abbassi",
+      "email": "abbassizied@outlook.fr",
+      "phone": "23249952",
+      "address": "Box Office n°83 - Post office of chorfa - 2243\r\nCITE AFH-1 near CNAM and Post Office of Chorfa",
+      "logoUrl": "/uploads/1738190033418-LOGO-MENU.png",
+      "dateCreated": "2025-01-29T21:48:39.763Z",
+      "lastUpdated": "2025-01-29T22:33:53.420Z"
+    },
+    {
+      "id": 4,
+      "name": "vvvvvvvvvvvvvv",
+      "email": "vvvvvvvvvv@vvv.v",
+      "phone": "23249952",
+      "address": "vvvvvvvvvvvvvvvvvvvvvvvvvv",
+      "logoUrl": "/uploads/1738190042258-toyota-logo.png",
+      "dateCreated": "2025-01-29T21:51:43.592Z",
+      "lastUpdated": "2025-01-29T22:34:02.260Z"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Premium Laptop",
+      "mainImage": "/uploads/laptop-main.jpg",
+      "description": "High-performance laptop",
+      "price": 1299.99,
+      "initialQuantity": 100,
+      "quantity": 95,
+      "supplierId": 1,
+      "dateCreated": "2023-09-20T12:00:00Z",
+      "lastUpdated": "2023-09-20T12:00:00Z"
+    }
+  ],
+  "images": [
+    {
+      "id": 1,
+      "url": "/uploads/laptop-angle1.jpg",
+      "productId": 1,
+      "dateCreated": "2023-09-20T12:00:00Z",
+      "lastUpdated": "2023-09-20T12:00:00Z"
+    }
+  ]
+}

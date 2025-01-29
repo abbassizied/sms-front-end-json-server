@@ -1,0 +1,27 @@
+<h2>Suppliers</h2>
+<a routerLink="new">Add New Supplier</a>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (supplier of suppliers(); track supplier.id) {
+      <tr>
+        <td>{{ supplier.name }}</td>
+        <td>{{ supplier.email }}</td>
+        <td>{{ supplier.phone }}</td>
+        <td>
+          <a [routerLink]="['view', supplier.id]">View</a> | 
+          <a [routerLink]="['edit', supplier.id]">Edit</a> | 
+          <button (click)="deleteSupplier(supplier.id)">Delete</button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
