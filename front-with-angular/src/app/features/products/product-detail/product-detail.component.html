@@ -1,23 +1,55 @@
-<div *ngIf="product()">
-    <h2>{{ product()!.name }}</h2>
-    <img [src]="product()!.mainImage" alt="Product image">
-    
-    <p>{{ product()!.description }}</p>
-    
-    <div class="row">
-      <div class="col-md-4">
-        <h4>Details</h4>
-        <ul class="list-group">
-          <li class="list-group-item">
-            <strong>Price:</strong> {{ product()!.price | currency }}
-          </li>
-          <li class="list-group-item">
-            <strong>Quantity:</strong> {{ product()!.quantity }}
-          </li>
-          <li class="list-group-item">
-            <strong>Supplier ID:</strong> {{ product()!.supplierId }}
-          </li>
-        </ul>
-      </div>
+<!-- product-detail.component.html -->
+@if (isLoading()) {
+<div>Loading product details...</div>
+} 
+
+@if (error()) {
+<div role="alert">
+  Error loading product: {{ error() }}
+  <a routerLink="/products">Return to products list</a>
+</div>
+} 
+
+@if (product(); as product) {
+<article>
+  <h1>{{ product.name }}</h1>
+
+
+    <img [src]="'http://localhost:8080' + product.mainImageUrl" alt="product.name" />
+ 
+
+  <section>
+    <h2>Description</h2>
+    <p>{{ product.description }}</p>
+  </section>
+
+  <dl>
+    <div>
+      <dt>Price</dt>
+      <dd>{{ product.price | currency }}</dd>
     </div>
-  </div>
+
+    <div>
+      <dt>Quantity in Stock</dt>
+      <dd>{{ product.quantity }}</dd>
+    </div>
+
+    <div>
+      <dt>Supplier ID</dt>
+      <dd>{{ product.supplierId }}</dd>
+    </div>
+  </dl>
+
+  @if (product.imagesUrl && product.imagesUrl.length) {
+  <section>
+    <h2>Additional Images</h2>
+    <div>
+      @for (image of product.imagesUrl; track $index) {
+        {{ image }}
+      <img [src]="'http://localhost:8080' + image" alt="product.name + ' ' + ($index + 1)" />
+      }
+    </div>
+  </section>
+  }
+</article>
+}

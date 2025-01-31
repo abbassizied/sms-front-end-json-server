@@ -1,54 +1,80 @@
-<!-- Main Image Input -->
-<div>
-  <label for="mainImage">Main Image</label>
-  <input type="file" 
-         id="mainImage" 
-         accept="image/*" 
-         (change)="onMainImageChange($event)"
-         aria-describedby="mainImageHelp">
-  <small id="mainImageHelp" class="form-text text-muted">
-    Select the primary product image
-  </small>
-</div>
+<!-- product-form.component.html -->
+<h2>{{ isEditMode() ? 'Edit Product' : 'Create Product' }}</h2>
 
-<!-- Additional Images Input -->
-<div>
-  <label for="additionalImages">Additional Images</label>
-  <input type="file" 
-         id="additionalImages" 
-         accept="image/*" 
-         multiple 
-         (change)="onImagesChange($event)"
-         aria-describedby="additionalImagesHelp">
-  <small id="additionalImagesHelp" class="form-text text-muted">
-    Select additional product images (multiple selection allowed)
-  </small>
-</div>
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+  <!-- Name -->
+  <div>
+    <label for="name">Product Name</label>
+    <input type="text" id="name" formControlName="name" required>
+    @if (productForm.controls.name.invalid && productForm.controls.name.touched) {
+      <div role="alert">Name is required (minimum 3 characters)</div>
+    }
+  </div>
 
-<!-- Price Input -->
-<div>
-  <label for="price">Price</label>
-  <input type="number" 
-         id="price" 
-         formControlName="price" 
-         step="0.01"
-         placeholder="Enter product price">
-</div>
+  <!-- Description -->
+  <div>
+    <label for="description">Description</label>
+    <textarea id="description" formControlName="description" required></textarea>
+    @if (productForm.controls.description.invalid && productForm.controls.description.touched) {
+      <div role="alert">Description is required (minimum 10 characters)</div>
+    }
+  </div>
 
-<!-- Quantity Input -->
-<div>
-  <label for="quantity">Quantity</label>
-  <input type="number" 
-         id="quantity" 
-         formControlName="quantity"
-         placeholder="Enter stock quantity">
-</div>
+  <!-- Supplier Selection -->
+  <div>
+    <label for="supplierId">Supplier</label>
+    <select id="supplierId" formControlName="supplierId" required>
+      <option value="">Select a supplier</option>
+      @for (supplier of suppliers(); track supplier.id) {
+        <option [value]="supplier.id">{{ supplier.name }}</option>
+      }
+    </select>
+    @if (productForm.controls.supplierId.invalid && productForm.controls.supplierId.touched) {
+      <div role="alert">Please select a supplier</div>
+    }
+  </div>
 
-<!-- Supplier ID Input -->
-<div>
-  <label for="supplierId">Supplier ID</label>
-  <input type="number" 
-         id="supplierId" 
-         formControlName="supplierId"
-         placeholder="Enter supplier ID">
-</div>
+  <!-- Price -->
+  <div>
+    <label for="price">Price</label>
+    <input type="number" id="price" formControlName="price" step="0.01" required>
+    @if (productForm.controls.price.invalid && productForm.controls.price.touched) {
+      <div role="alert">Valid price is required</div>
+    }
+  </div>
+
+  <!-- Quantity -->
+  <div>
+    <label for="quantity">Quantity</label>
+    <input type="number" id="quantity" formControlName="quantity" required>
+    @if (productForm.controls.quantity.invalid && productForm.controls.quantity.touched) {
+      <div role="alert">Valid quantity is required</div>
+    }
+  </div>
+
+  <!-- Main Image -->
+  <div>
+    <label for="mainImage">Main Image</label>
+    <input type="file" id="mainImage" accept="image/*" (change)="onMainImageChange($event)">
+    @if (mainImagePreview()) {
+      <img [src]="mainImagePreview()" alt="Main product preview" width="200">
+    }
+  </div>
+
+  <!-- Additional Images -->
+  <div>
+    <label for="additionalImages">Additional Images</label>
+    <input type="file" id="additionalImages" accept="image/*" multiple (change)="onImagesChange($event)">
+    <div>
+      @for (preview of imagePreviews(); track $index) {
+      }
+    </div>
+  </div>
+
+  <div>
+    <button type="submit" [disabled]="productForm.invalid">
+      {{ isEditMode() ? 'Update' : 'Create' }} Product
+    </button>
+    <a routerLink="/products">Cancel</a> 
+  </div>  
+</form>

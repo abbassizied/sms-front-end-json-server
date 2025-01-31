@@ -1,7 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
+// product-detail.component.ts
+import { Component, inject, signal, effect } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../_services/product.service';
 import { Product } from '../../../_models/product';
-import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,20 +10,42 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './product-detail.component.html',
-  styleUrl: './product-detail.component.css',
 })
 export class ProductDetailComponent {
-  private readonly productService = inject(ProductService);
   private readonly route = inject(ActivatedRoute);
-  product = signal<Product | undefined>(undefined);
+  private readonly router = inject(Router);
+  private readonly productService = inject(ProductService);
 
-  ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (id) {
-      this.productService.getProductById(id).subscribe({
-        next: (data) => this.product.set(data),
-        error: (err) => console.error('Error loading product:', err),
+  product = signal<Product | null>(null);
+  isLoading = signal(true);
+  error = signal<string | null>(null);
+
+  constructor() {
+    effect(() => {
+      const id = this.route.snapshot.params['id'];
+      if (!id) {
+        this.handleNavigationError();
+        return;
+      }
+
+      this.isLoading.set(true);
+      this.productService.getProductById(+id).subscribe({
+        next: (product) => {
+          this.product.set(product);
+          this.isLoading.set(false);
+        },
+        error: (err) => {
+          this.error.set(err.message);
+          this.isLoading.set(false);
+          this.handleNavigationError();
+        },
       });
-    }
+    });
+  }
+
+  private handleNavigationError(): void {
+    this.router
+      .navigate(['/products'])
+      .catch((err) => console.error('Navigation failed:', err));
   }
 }

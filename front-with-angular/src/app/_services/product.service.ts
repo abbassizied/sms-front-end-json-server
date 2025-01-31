@@ -43,13 +43,13 @@ export class ProductService {
     formData.append('quantity', data.quantity.toString());
     formData.append('supplierId', data.supplierId.toString());
 
-    if (data.mainImage) {
-      formData.append('mainImage', data.mainImage);
+    if (data.mainImageUrl) {
+      formData.append('mainImageUrl', data.mainImageUrl);
     }
 
-    if (data.images) {
-      data.images.forEach((image, index) => {
-        formData.append(`images`, image);
+    if (data.imagesUrl) {
+      data.imagesUrl.forEach((image, index) => {
+        formData.append(`imagesUrl`, image);
       });
     }
 

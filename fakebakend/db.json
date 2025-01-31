@@ -43,16 +43,42 @@
   ],
   "products": [
     {
-      "id": 1,
-      "name": "Premium Laptop",
-      "mainImage": "/uploads/laptop-main.jpg",
-      "description": "High-performance laptop",
-      "price": 1299.99,
-      "initialQuantity": 100,
-      "quantity": 95,
+      "id": 2,
+      "name": "Zied Abbassi",
       "supplierId": 1,
-      "dateCreated": "2023-09-20T12:00:00Z",
-      "lastUpdated": "2023-09-20T12:00:00Z"
+      "mainImageUrl": "/uploads/1738365002679-LOGO-MENU.png",
+      "imagesUrls": [
+        "/uploads/1738365002680-toyota-logo.png"
+      ],
+      "dateCreated": "2025-01-31T23:10:02.685Z",
+      "lastUpdated": "2025-01-31T23:10:02.685Z"
+    },
+    {
+      "id": 3,
+      "name": "apple 50",
+      "supplierId": 1,
+      "mainImageUrl": "/uploads/1738365255722-toyota-logo.png",
+      "imagesUrls": [],
+      "dateCreated": "2025-01-31T23:14:15.728Z",
+      "lastUpdated": "2025-01-31T23:14:15.728Z"
+    },
+    {
+      "id": 4,
+      "name": "TTTTT",
+      "supplierId": 2,
+      "mainImageUrl": null,
+      "imagesUrls": [],
+      "dateCreated": "2025-01-31T23:27:14.029Z",
+      "lastUpdated": "2025-01-31T23:27:14.030Z"
+    },
+    {
+      "id": 5,
+      "name": "TTTTT",
+      "supplierId": 1,
+      "mainImageUrl": null,
+      "imagesUrls": [],
+      "dateCreated": "2025-01-31T23:27:45.835Z",
+      "lastUpdated": "2025-01-31T23:27:45.835Z"
     }
   ],
   "images": [

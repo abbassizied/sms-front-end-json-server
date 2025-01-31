@@ -1,7 +1,8 @@
 <h2>Products</h2>
-<a routerLink="new" class="btn btn-primary">Add New Product</a>
 
-<table class="table mt-3">
+<a routerLink="new">Add New Product</a>
+
+<table>
   <thead>
     <tr>
       <th>Name</th>
@@ -15,14 +16,15 @@
     @for (product of products(); track product.id) {
       <tr>
         <td>
-          <a [routerLink]="[product.id]">{{ product.name }}</a>
+          {{ product.name }}
         </td>
         <td>{{ product.price | currency }}</td>
         <td>{{ product.quantity }}</td>
         <td>{{ product.supplierId }}</td>
         <td>
-          <a [routerLink]="['edit', product.id]" class="btn btn-sm btn-secondary">Edit</a>
-          <button (click)="deleteProduct(product.id)" class="btn btn-sm btn-danger ms-2">Delete</button>
+          <a [routerLink]="['view', product.id]">View</a> | 
+          <a [routerLink]="['edit', product.id]">Edit</a> | 
+          <button (click)="deleteProduct(product.id)">Delete</button>
         </td>
       </tr>
     }

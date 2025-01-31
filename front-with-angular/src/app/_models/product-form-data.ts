@@ -4,7 +4,7 @@ export interface ProductFormData {
   description: string;
   price: number;
   quantity: number;
-  mainImage?: File;
-  images?: File[];
   supplierId: number;
+  mainImageUrl: File;
+  imagesUrl?: File[];
 }

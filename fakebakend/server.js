@@ -41,6 +41,7 @@ const upload = multer({ storage });
 app.use(cors());
 // Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 console.log("Serving static files from:", uploadDir);
 app.use('/uploads', express.static(uploadDir));
 
@@ -73,6 +74,24 @@ app.post('/suppliers', upload.single('logoUrl'), (req, res) => {
 // Get All Suppliers
 app.get('/suppliers', (req, res) => {
   res.json(db.suppliers);
+});
+
+// Get Single Supplier by ID
+app.get('/suppliers/:id', (req, res) => {
+  const { id } = req.params;
+  
+  // Validate ID format
+  if (isNaN(id)) {
+    return res.status(400).json({ error: 'Invalid supplier ID format' });
+  }
+
+  const supplier = db.suppliers.find(s => s.id === parseInt(id));
+  
+  if (!supplier) {
+    return res.status(404).json({ error: 'Supplier not found' });
+  }
+
+  res.json(supplier);
 });
 
 // Update Supplier (with logo image)
@@ -128,24 +147,15 @@ app.delete('/suppliers/:id', (req, res) => {
 
 // Create Product (with mainImage + images)
 app.post('/products', upload.fields([
-  { name: 'mainImage', maxCount: 1 },
-  { name: 'images', maxCount: 10 }
+  { name: 'mainImageUrl', maxCount: 1 },
+  { name: 'imagesUrl', maxCount: 10 }
 ]), (req, res) => {
   const { name, supplierId } = req.body;
   const mainImageUrl = req.files['mainImage'] ? `/uploads/${req.files['mainImage'][0].filename}` : null;
   const imagesUrls = req.files['images'] ? req.files['images'].map(f => `/uploads/${f.filename}`) : [];
 
-  const newProduct = {
-    id: db.products.length + 1,
-    name,
-    supplierId: parseInt(supplierId),
-    mainImageUrl,
-    imagesUrls
-  };
-/*
   const newProduct = new Product(name, parseInt(supplierId), mainImageUrl, imagesUrls);
   newProduct.id = db.products.length ? db.products[db.products.length - 1].id + 1 : 1;
-*/
   db.products.push(newProduct);
   fs.writeFileSync(dbPath, JSON.stringify(db, null, 2));
   res.status(201).json(newProduct);
@@ -156,28 +166,28 @@ app.get('/products', (req, res) => {
   res.json(db.products);
 });
 
-// Get Single Supplier by ID
-app.get('/suppliers/:id', (req, res) => {
+// Get Single Product by ID
+app.get('/products/:id', (req, res) => {
   const { id } = req.params;
   
   // Validate ID format
   if (isNaN(id)) {
-    return res.status(400).json({ error: 'Invalid supplier ID format' });
+    return res.status(400).json({ error: 'Invalid product ID format' });
   }
 
-  const supplier = db.suppliers.find(s => s.id === parseInt(id));
+  const product = db.products.find(s => s.id === parseInt(id));
   
-  if (!supplier) {
-    return res.status(404).json({ error: 'Supplier not found' });
+  if (!product) {
+    return res.status(404).json({ error: 'Product not found' });
   }
 
-  res.json(supplier);
+  res.json(product);
 });
 
 // Update Product (with mainImage + images)
 app.put('/products/:id', upload.fields([
-  { name: 'mainImage', maxCount: 1 },
-  { name: 'images', maxCount: 10 }
+  { name: 'mainImageUrl', maxCount: 1 },
+  { name: 'imagesUrl', maxCount: 10 }
 ]), (req, res) => {
   const { id } = req.params;
   const { name } = req.body;
@@ -186,11 +196,11 @@ app.put('/products/:id', upload.fields([
   if (!product) return res.status(404).json({ error: 'Product not found' });
 
   product.name = name || product.name;
-  if (req.files['mainImage']) {
-    product.mainImageUrl = `/uploads/${req.files['mainImage'][0].filename}`;
+  if (req.files['mainImageUrl']) {
+    product.mainImageUrl = `/uploads/${req.files['mainImageUrl'][0].filename}`;
   }
-  if (req.files['images']) {
-    product.imagesUrls = req.files['images'].map(f => `/uploads/${f.filename}`);
+  if (req.files['imagesUrl']) {
+    product.imagesUrls = req.files['imagesUrl'].map(f => `/uploads/${f.filename}`);
   }
 
   fs.writeFileSync(dbPath, JSON.stringify(db, null, 2));
